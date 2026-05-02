@@ -43,10 +43,10 @@ Implement basic command-line process invocation, output hijacking, and display t
 
 ## 📝 Detailed Task Breakdown & Status Tracking
 
-- [ ] **1. CLI Basic Framework Setup**
-  - [ ] 1.1 Initialize the Rust project structure and introduce `clap`.
-  - [ ] 1.2 Implement the `mace init` command to generate a default `.mace.toml` template.
-  - [ ] 1.3 Implement parsing and deserialization logic for the configuration file.
+- [x] **1. CLI Basic Framework Setup**
+  - [x] 1.1 Initialize the Rust project structure and introduce `clap`.
+  - [x] 1.2 Implement the `mace init` command to generate a default `.mace.toml` template.
+  - [x] 1.3 Implement parsing and deserialization logic for the configuration file.
 - [ ] **2. Tool Registry & Environment Diagnostics Development**
   - [ ] 2.1 Develop the `mace tools` / `mace doctor` CLI command to display tool status.
   - [ ] 2.2 Implement background probing functions to check `$PATH` and binary versions (e.g., `aider`, `claude`).
@@ -64,4 +64,4 @@ Implement basic command-line process invocation, output hijacking, and display t
   - [ ] 4.3 Implement automatic scrolling and coloring for each pane (coloring based on cleaned information levels).
 
 ---
-**Current Phase Status**: ⏳ Not Started
+**Current Phase Status**: 🟢 In Progress

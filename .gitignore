@@ -21,3 +21,10 @@ target
 #.idea/
 
 .design/
+
+# Added by cargo
+
+/target
+
+# MACE local config
+.mace.toml
