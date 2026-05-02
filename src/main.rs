@@ -8,9 +8,13 @@ use anyhow::{Context, Result};
 async fn main() -> Result<()> {
     let cli = cli::Cli::parse();
 
-    let config_path = dirs::home_dir()
-        .context("Unable to locate user home directory")?
-        .join(".mace.toml");
+    #[cfg(target_os = "windows")]
+    let base_dir = dirs::config_dir().context("Unable to locate user config directory")?;
+    
+    #[cfg(not(target_os = "windows"))]
+    let base_dir = dirs::home_dir().context("Unable to locate user home directory")?.join(".config");
+
+    let config_path = base_dir.join("mace").join("config.toml");
 
     match &cli.command {
         cli::Commands::Init => {

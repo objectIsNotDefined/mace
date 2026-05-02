@@ -44,6 +44,10 @@ pub fn generate_default_config(path: &Path) -> Result<()> {
         anyhow::bail!("Configuration file {:?} already exists.", path);
     }
 
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent).context("Failed to create configuration directory")?;
+    }
+
     let mut config = MaceConfig::default();
     
     config.roles.insert("architect".to_string(), RoleDef {
