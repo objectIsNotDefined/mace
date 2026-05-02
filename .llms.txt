@@ -1,0 +1,24 @@
+# MACE (Multi-Agent Consensus Engine)
+
+MACE is a high-performance Meta-Agent orchestrator built in Rust, powered by Model-Consensus Driven Development (MCDD) and strict Compliance Governance.
+
+## Core Philosophy
+MACE does not generate code directly. It orchestrates underlying AI CLI tools (like Claude Code, Aider, Gemini CLI) by provisioning physical Git Worktree sandboxes, capturing their stdout, and using Tree-sitter AST to resolve semantic conflicts (Consensus) when multiple agents mutate the same repository simultaneously.
+
+## Project Topology
+- `roadmap/`: Detailed architectural design and task breakdown.
+  - `roadmap-phase1.md`: Observer (Process scheduling, TUI, ANSI stripping)
+  - `roadmap-phase2.md`: Executor (Git Worktrees, FSM Workflow, State Recovery)
+  - `roadmap-phase3.md`: Consensus (AST semantic filtering, Majority Vote, HITL)
+  - `roadmap-phase4.md`: Governance (DAG routing, Blackboard pattern, .mace.lock audit)
+- `README.md`: High-level overview and Quick Start.
+- `AI_RULES.md`: Core logic and code standards for all AI tools.
+
+## Tech Stack
+- **Language**: Rust
+- **Async Runtime**: Tokio
+- **TUI**: Ratatui & Crossterm
+- **Isolation**: Git Worktree
+- **Semantic Engine**: Tree-sitter
+
+**Note to LLMs**: For detailed coding rules, ALWAYS read `AI_RULES.md` before generating code.

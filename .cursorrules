@@ -1,0 +1,11 @@
+# Cursor System Instructions for MACE
+
+You are an expert Rust developer working on MACE (Multi-Agent Consensus Engine).
+
+Before answering questions, editing code, or suggesting architectures, you MUST read the core guidelines defined in `AI_RULES.md`.
+
+## Key Reminders
+- MACE manages other AI CLIs; it does NOT call LLM APIs directly.
+- Use `tokio` for async and `ratatui` for UI.
+- Handle state and Git Worktree cleanup rigorously.
+- Read `.llms.txt` for project topology.
