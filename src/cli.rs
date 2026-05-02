@@ -9,7 +9,7 @@ pub struct Cli {
 
 #[derive(Subcommand, Debug)]
 pub enum Commands {
-    /// Initialize MACE configuration (.mace.toml) in current repository
+    /// Initialize MACE configuration (.mace.toml) in user's home directory
     Init,
     /// Dispatch a concurrent task
     Run {

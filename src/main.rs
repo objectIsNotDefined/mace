@@ -2,24 +2,25 @@ mod cli;
 mod config;
 
 use clap::Parser;
-use std::path::Path;
-use anyhow::Result;
+use anyhow::{Context, Result};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = cli::Cli::parse();
 
-    let config_path = Path::new(".mace.toml");
+    let config_path = dirs::home_dir()
+        .context("Unable to locate user home directory")?
+        .join(".mace.toml");
 
     match &cli.command {
         cli::Commands::Init => {
-            match config::generate_default_config(config_path) {
+            match config::generate_default_config(&config_path) {
                 Ok(_) => println!("✅ Successfully generated default configuration at {:?}", config_path),
                 Err(e) => eprintln!("❌ Failed to initialize config: {}", e),
             }
         }
         cli::Commands::Run { prompt, roles, models: _ } => {
-            let config = config::load_config(config_path)?;
+            let config = config::load_config(&config_path)?;
             println!("Configuration loaded. Roles defined: {:?}", config.roles.keys());
             println!("Task: {}", prompt);
             if let Some(r) = roles {
