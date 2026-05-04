@@ -58,7 +58,7 @@ Implement basic command-line process invocation, output hijacking, and display t
 - [ ] **4. Output Cleaning Pipeline Construction**
   - [ ] 3.1 Integrate the ANSI cleaning tool.
   - [ ] 3.2 Establish an `mpsc` (Multi-Producer Single-Consumer) message channel mechanism with the TUI to ensure the logging thread does not block the UI refresh thread.
-- [ ] **5. TUI Monitoring Dashboard Development**
+- [ ] **5. TUI Monitoring Dashboard Development** (See [UX Design](../roadmap/ux_design.md))
   - [ ] 4.1 Setup the `ratatui` + `crossterm` Event Loop.
   - [ ] 4.2 Implement an adaptive grid layout (dynamic 1x2, 2x2 split-screen based on child process count).
   - [ ] 4.3 Implement automatic scrolling and coloring for each pane (coloring based on cleaned information levels).

@@ -1,5 +1,6 @@
 mod cli;
 mod config;
+mod tui;
 
 use clap::Parser;
 use anyhow::{Context, Result};
@@ -22,7 +23,15 @@ async fn main() -> Result<()> {
 
     let config_path = config_dir.join("config.toml");
 
-    match &cli.command {
+    if cli.command.is_none() {
+        // Run TUI mode
+        if let Err(e) = tui::run_tui().await {
+            eprintln!("TUI Error: {}", e);
+        }
+        return Ok(());
+    }
+
+    match cli.command.unwrap() {
         cli::Commands::Init => {
             println!("🚀 Initializing global MACE configuration...");
             // Ensure the global config directory exists

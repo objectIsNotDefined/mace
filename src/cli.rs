@@ -3,8 +3,11 @@ use clap::{Parser, Subcommand};
 #[derive(Parser, Debug)]
 #[command(author, version, about = "Multi-Agent Consensus Engine (MACE)")]
 pub struct Cli {
+    /// Optional workspace path. If omitted, uses current directory.
+    pub path: Option<String>,
+
     #[command(subcommand)]
-    pub command: Commands,
+    pub command: Option<Commands>,
 }
 
 #[derive(Subcommand, Debug)]
