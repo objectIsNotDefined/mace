@@ -11,6 +11,11 @@ pub struct Cli {
 pub enum Commands {
     /// Initialize MACE configuration (config.toml) in user's XDG config directory
     Init,
+    /// Configure roles and agents interactively
+    Config {
+        /// The role to configure (optional)
+        role: Option<String>,
+    },
     /// Dispatch a concurrent task
     Run {
         /// The prompt/task to execute

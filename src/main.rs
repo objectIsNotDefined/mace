@@ -8,27 +8,47 @@ use anyhow::{Context, Result};
 async fn main() -> Result<()> {
     let cli = cli::Cli::parse();
 
+    // Force global config path: ~/.config/mace/config.toml (or equivalent on Windows)
     #[cfg(target_os = "windows")]
-    let base_dir = dirs::config_dir().context("Unable to locate user config directory")?;
+    let config_dir = dirs::config_dir()
+        .context("Unable to locate user config directory")?
+        .join("mace");
     
     #[cfg(not(target_os = "windows"))]
-    let base_dir = dirs::home_dir().context("Unable to locate user home directory")?.join(".config");
+    let config_dir = dirs::home_dir()
+        .context("Unable to locate user home directory")?
+        .join(".config")
+        .join("mace");
 
-    let config_path = base_dir.join("mace").join("config.toml");
+    let config_path = config_dir.join("config.toml");
 
     match &cli.command {
         cli::Commands::Init => {
-            match config::generate_default_config(&config_path) {
-                Ok(_) => println!("✅ Successfully generated default configuration at {:?}", config_path),
-                Err(e) => eprintln!("❌ Failed to initialize config: {}", e),
+            println!("🚀 Initializing global MACE configuration...");
+            // Ensure the global config directory exists
+            if !config_dir.exists() {
+                std::fs::create_dir_all(&config_dir)
+                    .context("Failed to create global config directory")?;
             }
+            
+            match config::generate_default_config(&config_path) {
+                Ok(_) => println!("✅ Successfully generated global configuration at {:?}", config_path),
+                Err(e) => {
+                    eprintln!("❌ Failed to initialize config: {}", e);
+                    std::process::exit(1);
+                }
+            }
+        }
+        cli::Commands::Config { role } => {
+            config::run_interactive_config(&config_path, role.clone())?;
         }
         cli::Commands::Run { prompt, roles, models: _ } => {
             let config = config::load_config(&config_path)?;
-            println!("Configuration loaded. Roles defined: {:?}", config.roles.keys());
-            println!("Task: {}", prompt);
+            println!("⚙️  Global configuration loaded from {:?}", config_path);
+            println!("🤖 Roles available: {}", config.roles.keys().cloned().collect::<Vec<_>>().join(", "));
+            println!("📝 Task: {}", prompt);
             if let Some(r) = roles {
-                println!("Using roles: {}", r);
+                println!("🎭 Using roles: {}", r);
             }
             // TODO: Execute task
         }
